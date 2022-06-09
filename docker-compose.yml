@@ -1,0 +1,17 @@
+services:
+  backend:
+    image: balazscsabak/contacts-service-backend:0.0.1
+    container_name: contacts-service-backend
+    ports:
+      - "3013:3001"
+    restart: always
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.contacts-backend.rule=Host(`contacts-backend.balazscsabak.hu`)
+      - traefik.http.routers.contacts-backend.tls=true
+      - traefik.http.routers.contacts-backend.tls.certresolver=lets-encrypt
+      - traefik.port=3013
+    network_mode: "proxy-network"
+networks:
+  proxy-network:
+    external: true
